@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/musicphoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/music_icon" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:layout_toEndOf="@id/musicphoto"
+        android:layout_toStartOf="@id/songDuration"
+        android:layout_margin="5dp"
+        >
+    <TextView
+                android:id="@+id/musicName"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:text="Music Name"
+                />
+        <TextView
+            android:id="@+id/singerName"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:gravity="center_vertical"
+
+            android:textSize="16dp"
+            android:singleLine="true"
+            android:text="Singer name"
+            />
+    </LinearLayout>
+
+        <TextView
+            android:id="@+id/songDuration"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:text="00:00"
+            android:layout_marginHorizontal="5dp"
+            />
+</RelativeLayout>

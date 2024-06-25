@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Blissful Vibes</string>
+    <string name="music_End_time">05:00</string>
+    <string name="music_start_time">00:00</string>
+    <string name="shuffle_btn">Shuffle</string>
+    <string name="timer_btn">Timer\n\n</string>
+    <string name="volume_btn">Volume\n</string>
+    <string name="share_btn">Share\n</string>
+    <string name="equiliser_btn">Equiliser\n</string>
+    <string name="song_name">Dhokha deke kya mila</string>
+    <string name="back_music_btn">Back music</string>
+    <string name="favorite_btn">Favorite\n</string>
+    <string name="previous_btn">Previous</string>
+    <string name="play_btn">Play</string>
+    <string name="next_btn">Next</string>
+    <string name="favorite">Favorite</string>
+    <string name="playlist">PlayList</string>
+    <string name="nextPlay">NextPlay</string>
+    <string name="music_player">Music Player</string>
+    <string name="navigation_drawer_open">Open navigation drawer\n</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>
