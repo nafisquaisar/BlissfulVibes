@@ -77,8 +77,8 @@
         android:layout_marginTop="40dp"
         android:text="@string/song_name"
         android:textSize="20sp"
+        android:layout_marginHorizontal="10dp"
         android:singleLine="true"
-        android:rotation="@integer/material_motion_duration_short_1"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -174,11 +174,11 @@
 
             <ImageButton
                 android:id="@+id/repeat"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/shuffle"
+                android:src="@drawable/baseline_repeat_24"
                 android:contentDescription="@string/shuffle_btn"
                 />
 

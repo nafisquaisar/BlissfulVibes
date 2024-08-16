@@ -1,0 +1,9 @@
+<!-- res/menu/more_option.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item
+            android:id="@+id/moreOption"
+            android:title="@string/more_option"
+            android:icon="@drawable/baseline_more_vert_24"
+            app:showAsAction="always" />
+</menu>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoriteMusic">
+    tools:context=".add_song_playlist">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/playlisttoolbar"
         android:layout_width="match_parent"
@@ -14,44 +15,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back_arrow"
-        app:menu="@menu/playlist_menu">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_playlist_music"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/favorite"
-                android:textColor="@color/secondary_dark_blue"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
+                app:queryHint="Search Music"
+                android:layout_margin="2dp"
+                app:iconifiedByDefault="false"
+                app:searchIcon="@drawable/search_music"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
 
+                android:background="@drawable/bg_search"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/FavoriteRecyclerView"
+        android:id="@+id/PlaylistRecylerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@drawable/scrollbaricon"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playlisttoolbar"
+        tools:itemCount="5" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/favoriteShufflebtn"
+        android:id="@+id/doneaddsong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        app:icon="@drawable/shuffle"
+        app:icon="@drawable/baseline_done_all_24"
         app:iconSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,4 +64,5 @@
         app:strokeColor="@color/secondary_dark_blue"
         app:strokeWidth="2dp"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

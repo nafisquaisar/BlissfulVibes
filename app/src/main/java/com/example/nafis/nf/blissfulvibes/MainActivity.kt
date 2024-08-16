@@ -7,27 +7,46 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Audio.Media
-import android.provider.MediaStore.Audio.Playlists
-import android.renderscript.ScriptGroup.Binding
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.nafis.nf.blissfulvibes.R.color
 import com.example.nafis.nf.blissfulvibes.adapter.MusicAdapter
 import com.example.nafis.nf.blissfulvibes.data.MusicDetail
+import com.example.nafis.nf.blissfulvibes.data.MusicPlaylist
+import com.example.nafis.nf.blissfulvibes.data.stopApplication
 import com.example.nafis.nf.blissfulvibes.databinding.ActivityMainBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var toolbar: Toolbar
     private lateinit var adapter: MusicAdapter
 
-    companion object{
-        lateinit var musiclist : ArrayList<MusicDetail>
+    companion object {
+        lateinit var musiclist: ArrayList<MusicDetail>
+        lateinit var musiclistSerach: ArrayList<MusicDetail>
+        var search: Boolean = false
+        var sortOrder:Int=0
+        val sortingList = arrayOf(
+            MediaStore.Audio.Media.DATE_ADDED + " DESC",
+            MediaStore.Audio.Media.TITLE,
+            MediaStore.Audio.Media.SIZE + " DESC",
+            MediaStore.Audio.Media.DISPLAY_NAME
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -37,15 +56,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         toolbar = binding.hometoolbar
+        setSupportActionBar(toolbar)
+
         clickbtn()
         drawer()
-        if (requestRuntimePermission()){
-        adapterset()
-        }
+        if (requestRuntimePermission()) {
 
+            adapterset()
+            // retirve data from sharePrefrence for Favrourate list
+            FavoriteMusic.musicListfb = ArrayList()
+            val edit = getSharedPreferences("Favorite", MODE_PRIVATE)
+            val jsonString = edit.getString("FavoriteSong", null)
+            val typeToken = object : TypeToken<ArrayList<MusicDetail>>() {}.type
+            if (jsonString != null) {
+                val data: ArrayList<MusicDetail> =
+                    GsonBuilder().create().fromJson(jsonString, typeToken)
+                FavoriteMusic.musicListfb.addAll(data)
+
+                // retirve data from sharePrefrence for Playlist
+                PlayList.musicPlaylist = MusicPlaylist()
+                val jsonStringPlayList = edit.getString("Playlistmusic", null)
+                if (jsonStringPlayList != null) {
+                    val dataPlaylist: MusicPlaylist = GsonBuilder().create()
+                        .fromJson(jsonStringPlayList, MusicPlaylist::class.java)
+                    PlayList.musicPlaylist = dataPlaylist
+
+                }
+            }
+        }
     }
 
-    // fetch data from file
     private fun fetchMusicData(): ArrayList<MusicDetail> {
         val templist = ArrayList<MusicDetail>()
 
@@ -65,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             projection,
             selection,
             null,
-            MediaStore.Audio.Media.DATE_ADDED + " DESC",
+            sortingList[sortOrder],
             null
         )
 
@@ -77,12 +117,12 @@ class MainActivity : AppCompatActivity() {
                     val albumIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
                     val artistIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
                     val durationIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
-                    val albumid= cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)
-
+                    val albumid = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)
                     val dataIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DATA)
 
                     if (idIndex != -1 && titleIndex != -1 && albumIndex != -1 && artistIndex != -1 &&
-                        durationIndex != -1  && dataIndex != -1) {
+                        durationIndex != -1 && dataIndex != -1
+                    ) {
 
                         val id = cursor.getString(idIndex)
                         val title = cursor.getString(titleIndex)
@@ -91,9 +131,12 @@ class MainActivity : AppCompatActivity() {
                         val duration = cursor.getLong(durationIndex)
                         val data = cursor.getString(dataIndex)
                         val albumid = cursor.getLong(albumid).toString()
-                        val uri= Uri.parse("content://media/external/audio/albumart")
-                        val imgUri=Uri.withAppendedPath(uri,albumid).toString()
-                        val musicDetail = MusicDetail(musicId =id , musicTitle =  title, musicAlbum =  album, musicArtist = artist, musicPath = data,duration=duration,imgUri=imgUri)
+                        val uri = Uri.parse("content://media/external/audio/albumart")
+                        val imgUri = Uri.withAppendedPath(uri, albumid).toString()
+                        val musicDetail = MusicDetail(
+                            musicId = id, musicTitle = title, musicAlbum = album,
+                            musicArtist = artist, musicPath = data, duration = duration, imgUri = imgUri
+                        )
                         templist.add(musicDetail)
                     }
                 } while (cursor.moveToNext())
@@ -104,23 +147,20 @@ class MainActivity : AppCompatActivity() {
         return templist
     }
 
-
-
-    //    set adapter into the recyclerview
     private fun adapterset() {
-
-        musiclist=fetchMusicData()
+        search = false
+        val sortingEditor=getSharedPreferences("Sorting", MODE_PRIVATE)
+        sortOrder=sortingEditor.getInt("sortOrder",0)
+        musiclist = fetchMusicData()
         binding.apply {
             homeRecycler.setHasFixedSize(true)
             homeRecycler.setItemViewCacheSize(13)
-            adapter=MusicAdapter(this@MainActivity, musiclist)
-            homeRecycler.adapter=adapter
-            totalsong.text="Total Songs : "+adapter.itemCount.toString()
+            adapter = MusicAdapter(this@MainActivity, musiclist)
+            homeRecycler.adapter = adapter
+            totalsong.text = "Total Songs : " + adapter.itemCount.toString()
         }
-
     }
 
-    //    drawer Function
     private fun drawer() {
         val drawerLayout = binding.drawer
         val drawerToggle = DuoDrawerToggle(
@@ -133,17 +173,21 @@ class MainActivity : AppCompatActivity() {
         drawerToggle.syncState()
     }
 
-//    runtime permision start
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun requestRuntimePermission() :Boolean{
-        if (ActivityCompat.checkSelfPermission(this@MainActivity, android.Manifest.permission.READ_MEDIA_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_MEDIA_AUDIO), 101)
+    private fun requestRuntimePermission(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this@MainActivity,
+                android.Manifest.permission.READ_MEDIA_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(android.Manifest.permission.READ_MEDIA_AUDIO), 101
+            )
             return false
         }
-    return true
+        return true
     }
 
-//    manager permission start
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -152,69 +196,150 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 101) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
                 adapterset()
             } else {
                 ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(android.Manifest.permission.READ_MEDIA_AUDIO),
-                    101
+                    this, arrayOf(android.Manifest.permission.READ_MEDIA_AUDIO), 101
                 )
             }
         }
     }
 
-//    intent navigate btn start
     private fun clickbtn() {
         binding.apply {
             Homenextplaybtn.setOnClickListener {
-                startActivity(
-                    Intent(
-                        this@MainActivity,
-                        PlayNextOperation::class.java
-                    )
-                )
+                startActivity(Intent(this@MainActivity, PlayNextOperation::class.java))
             }
             homePlaylisttbtn.setOnClickListener {
-                startActivity(
-                    Intent(
-                        this@MainActivity,
-                        PlayList::class.java
-                    )
-                )
+                startActivity(Intent(this@MainActivity, PlayList::class.java))
             }
             homefavrouteBtn.setOnClickListener {
-                startActivity(
-                    Intent(
-                        this@MainActivity,
-                        FavoriteMusic::class.java
-                    )
-                )
+                startActivity(Intent(this@MainActivity, FavoriteMusic::class.java))
             }
             Homeshufflebtn.setOnClickListener {
-                var intent=Intent(this@MainActivity, PlaymusicList::class.java)
-                intent.putExtra("index",0)
-                intent.putExtra("class","MainActivity")
+                val intent = Intent(this@MainActivity, PlaymusicList::class.java)
+                intent.putExtra("index", 0)
+                intent.putExtra("class", "MainActivity")
                 startActivity(intent)
             }
             llBase.setOnClickListener {
-                startActivity(
-                    Intent(
-                        this@MainActivity,
-                        BaseSetting::class.java
-                    )
-                )
+                startActivity(Intent(this@MainActivity, BaseSetting::class.java))
             }
             llSetting.setOnClickListener {
-                startActivity(
-                    Intent(
-                        this@MainActivity,
-                        AppSetting::class.java
-                    )
-                )
+                startActivity(Intent(this@MainActivity, AppSetting::class.java))
             }
-            llShuffle.setOnClickListener { startActivity(Intent(this@MainActivity, PlaymusicList::class.java))
+            llShuffle.setOnClickListener {
+                startActivity(Intent(this@MainActivity, PlaymusicList::class.java))
+            }
+            llExit.setOnClickListener {
+                val builder = MaterialAlertDialogBuilder(this@MainActivity)
+                    .setTitle("Exit")
+                    .setMessage("Are you Sure to Exit")
+                    .setPositiveButton("Yes") { _, _ ->
+                        stopApplication()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+
+                val alertDialog = builder.create()
+                alertDialog.show()
+                val color = ContextCompat.getColor(this@MainActivity, color.icon_color)
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(color)
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(color)
+            }
+            NowPlaying.setOnClickListener{
+                startActivity(Intent(this@MainActivity,PlaymusicList::class.java))
+            }
+            sortbutton.setOnClickListener {
+                sortingFun()
             }
         }
+    }
+
+//    ====================== sorting function implement==============================
+private fun sortingFun() {
+    val menuList = arrayOf("Recently Added", "Song Title", "File Size", "File Name")
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Sort By")
+        .setSingleChoiceItems(menuList, sortOrder) { _, which ->
+            sortOrder = which
+        }
+        .setPositiveButton("OK") { _, _ ->
+            val editor = getSharedPreferences("Sorting", MODE_PRIVATE).edit()
+            editor.putInt("sortOrder", sortOrder)
+            editor.apply()
+            // Update the music list based on the new sorting order
+            musiclist = fetchMusicData()
+            adapter.updateMusicList(musiclist)
+            binding.totalsong.text = "Total Songs: ${adapter.itemCount}"
+        }
+        .setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+    val dialog = builder.create()
+    dialog.show()
+    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, color.icon_color))
+    dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, color.icon_color))
+}
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!PlaymusicList.isPlay && PlaymusicList.musicService != null) {
+            PlaymusicList.musicService!!.stopForeground(true)
+            PlaymusicList.musicService!!.mediaPlayer?.release()
+            PlaymusicList.musicService = null
+        }
+        exitProcess(1)
+    }
+
+    override fun onResume() {
+        super.onResume()
+       val edit=getSharedPreferences("Favorite", MODE_PRIVATE).edit()
+        val jsonString=GsonBuilder().create().toJson(FavoriteMusic.musicListfb)
+        edit.putString("FavoriteSong",jsonString)
+        val jsonStringPlaylist=GsonBuilder().create().toJson(PlayList.musicPlaylist)
+        edit.putString("Playlistmusic",jsonStringPlaylist)
+        edit.apply()
+        val sortingEditor=getSharedPreferences("Sorting", MODE_PRIVATE)
+        val sortValue=sortingEditor.getInt("sortOrder",0)
+        if((sortOrder!=sortValue)){
+            sortOrder=sortValue
+            musiclist=fetchMusicData()
+            adapter.updateMusicList(musiclist)
+        }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.playlist_menu, menu)
+        val searchView = menu?.findItem(R.id.search_playlist)?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("MainActivity", "onQueryTextSubmit: $query")
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d("MainActivity", "onQueryTextChange: $newText")
+                Toast.makeText(this@MainActivity, newText.toString(), Toast.LENGTH_SHORT).show()
+                musiclistSerach = ArrayList()
+                if (newText != null) {
+                    val userInput = newText.lowercase()
+                    for (song in musiclist) {
+                        if (song.musicTitle.lowercase().contains(userInput)) {
+                            musiclistSerach.add(song)
+                        }
+                    }
+                    search = true
+                    adapter.updateMusicList(searchList = musiclistSerach)
+                }
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 }

@@ -3,18 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
 
     <application
+        android:name=".application.ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/music_icon"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/music_round_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlissfulVibes"
         tools:targetApi="31">
+        <activity
+            android:name=".add_song_playlist"
+            android:exported="false" />
+        <activity
+            android:name=".PlaylistMusicListActivity"
+            android:exported="false" />
+
         <activity
             android:name=".BaseSetting"
             android:exported="false" />
@@ -45,6 +57,19 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <service
+            android:name=".Service.MusicService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="com.example.nafis.nf.blissfulvibes.ACTION_PLAY" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".BroadReciver.NotificationReciver"
+            android:enabled="true" />
     </application>
 
 </manifest>

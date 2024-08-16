@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="3dp"
+    app:strokeColor="@color/icon_color"
+    app:strokeWidth="2dp"
+    android:layout_height="wrap_content">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:padding="10dp"
+      >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Create new Playlist"
+          android:textSize="24sp"
+          android:textColor="@color/icon_color"
+          android:layout_gravity="center"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+          <ImageView
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:src="@mipmap/music_icon"
+              android:layout_margin="5dp"
+              android:layout_gravity="center_vertical"
+              />
+          <com.google.android.material.textfield.TextInputLayout
+              android:id="@+id/createPlaylist"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
+              android:hint="Enter the Playlist Name"
+              >
+              <EditText
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:inputType="text"
+                  />
+          </com.google.android.material.textfield.TextInputLayout>
+
+      </LinearLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/cancelbtn"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/cancel"
+              android:background="@color/icon_color"
+              android:textColor="@color/white"
+              android:textSize="16sp"
+              android:layout_margin="10dp"
+             android:layout_weight="1"
+              />
+          <androidx.appcompat.widget.AppCompatButton
+              android:id="@+id/createbtn"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/create"
+              android:background="@color/icon_color"
+              android:textColor="@color/white"
+              android:textSize="16sp"
+              android:layout_weight="1"
+              android:layout_margin="10dp"
+
+              />
+      </LinearLayout>
+  </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

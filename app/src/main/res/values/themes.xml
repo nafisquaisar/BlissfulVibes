@@ -6,4 +6,15 @@
     </style>
 
     <style name="Theme.BlissfulVibes" parent="Base.Theme.BlissfulVibes" />
+
+<!--    // popup style-->
+    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:maxWidth">100dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item> <!-- Ensure text color is set -->
+        <item name="android:background">?android:attr/windowBackground</item> <!-- Ensure background is set -->
+    </style>
+
 </resources>
