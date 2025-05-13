@@ -294,7 +294,7 @@ class PlaymusicList : AppCompatActivity(), ServiceConnection ,  MediaPlayer.OnCo
         musicService = binder.currentService()
         serviceBound = true
         createMediaFun()
-        musicService!!.setupSeekbar()
+        musicService!!.seekBarSetup()
 
     }
     // ================== Service Connect Fun end ===========================

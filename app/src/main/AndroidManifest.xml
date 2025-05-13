@@ -2,11 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- Audio Permission for android 13 or higher -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- Notification -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Notification Permission for Android 14 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-
 
     <application
         android:name=".application.ApplicationClass"
@@ -21,12 +20,20 @@
         android:theme="@style/Theme.BlissfulVibes"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.DashBoard"
+            android:exported="false" />
+        <activity
             android:name=".add_song_playlist"
             android:exported="false" />
         <activity
             android:name=".PlaylistMusicListActivity"
             android:exported="false" />
-
         <activity
             android:name=".BaseSetting"
             android:exported="false" />
@@ -60,7 +67,7 @@
 
         <service
             android:name=".Service.MusicService"
-            android:exported="false"
+            android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="com.example.nafis.nf.blissfulvibes.ACTION_PLAY" />
@@ -69,7 +76,15 @@
 
         <receiver
             android:name=".BroadReciver.NotificationReciver"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.nafis.nf.blissfulvibes.ApplicationClass.PLAY" />
+                <action android:name="com.example.nafis.nf.blissfulvibes.ApplicationClass.NEXT" />
+                <action android:name="com.example.nafis.nf.blissfulvibes.ApplicationClass.PREVIOUS" />
+                <action android:name="com.example.nafis.nf.blissfulvibes.ApplicationClass.EXIT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

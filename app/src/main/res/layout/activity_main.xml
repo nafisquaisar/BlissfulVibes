@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         >
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,27 +23,30 @@
             <!--            header grawerr-->
             <LinearLayout
                 android:id="@+id/douHeader"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginStart="10dp"
-                >
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:src="@mipmap/music_icon"
-                    />
+                    android:layout_marginEnd="10dp"
+                    android:src="@mipmap/music_icon" />
+
                 <TextView
-                    android:textSize="30sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Blissful Vibes"
-                    android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:textColor="@color/white"/>
+                    android:text="Blissful Vibes"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -51,11 +54,15 @@
             <!--            item start-->
 
             <LinearLayout
+                android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+
                 android:orientation="vertical"
-               android:layout_marginTop="30dp"
-                >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/douHeader">
 
                 <LinearLayout
                     android:id="@+id/ll_setting"
@@ -63,27 +70,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/baseline_settings_24"
 
                         app:tint="@color/white" />
+
                     <TextView
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
                         android:layout_marginHorizontal="16dp"
-                        android:textColor="@color/white"
                         android:text="Setting"
-                        />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/ll_shuffle"
@@ -91,9 +97,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -103,11 +109,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
                         android:layout_marginHorizontal="16dp"
-                        android:textColor="@color/white"
                         android:text="Shuffle"
-                        />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -117,26 +122,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:src="@drawable/base_setting"
                         app:tint="@color/white" />
+
                     <TextView
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
                         android:layout_marginHorizontal="18dp"
-                        android:textColor="@color/white"
                         android:text="Base Setting"
-                        />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/ll_Exit"
@@ -144,32 +148,50 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/baseline_exit_to_app_24"
 
                         app:tint="@color/white" />
+
                     <TextView
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
                         android:layout_marginHorizontal="16dp"
-                        android:textColor="@color/white"
                         android:text="Exit"
-                        />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:gravity="center"
+                    android:text="Version 1.0.0" />
             </LinearLayout>
 
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </nl.psdcompany.duonavigationdrawer.views.DuoMenuView>
 

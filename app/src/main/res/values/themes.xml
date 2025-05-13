@@ -17,4 +17,5 @@
         <item name="android:background">?android:attr/windowBackground</item> <!-- Ensure background is set -->
     </style>
 
+
 </resources>

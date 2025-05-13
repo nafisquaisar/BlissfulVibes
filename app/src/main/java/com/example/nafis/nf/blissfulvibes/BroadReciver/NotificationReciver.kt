@@ -16,13 +16,18 @@ import kotlin.system.exitProcess
 
 class NotificationReciver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        when(intent?.action) {
-            ApplicationClass.PREVIOUS -> prenextprocss(false, context!!)
-            ApplicationClass.PLAY -> if (PlaymusicList.isPlay) pausefun() else playfun()
-            ApplicationClass.NEXT -> prenextprocss(true, context!!)
-            ApplicationClass.EXIT -> stopApplication()
+        if (context != null && intent != null) {
+            when (intent.action) {
+                ApplicationClass.PREVIOUS -> prenextprocss(false, context)
+                ApplicationClass.PLAY -> {
+                    if (PlaymusicList.isPlay) pausefun() else playfun()
+                }
+                ApplicationClass.NEXT -> prenextprocss(true, context)
+                ApplicationClass.EXIT -> stopApplication()
+            }
         }
     }
+
 
     private fun playfun() {
         PlaymusicList.isPlay = true
