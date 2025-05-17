@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:id="@+id/shimmer_text_layout"
+    android:paddingBottom="8dp"
+    app:shimmer_auto_start="true"
+    app:shimmer_duration="1500">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Name Placeholder -->
+        <View
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rectangle_placeholder" />
+
+        <!-- Email Placeholder -->
+        <View
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:background="@drawable/rectangle_placeholder" />
+    </LinearLayout>
+</com.facebook.shimmer.ShimmerFrameLayout>

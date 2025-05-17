@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:shimmer_auto_start="true"
+    app:shimmer_duration="1500">
+
+    <!-- Circular shimmer only for profile image -->
+    <View
+        android:id="@+id/shimmer_circle"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_gravity="center"
+        android:background="@drawable/edit_background_circle"/>
+</com.facebook.shimmer.ShimmerFrameLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "763312949086",
+    "firebase_url": "https://work-progress-387ac-default-rtdb.firebaseio.com",
+    "project_id": "work-progress-387ac",
+    "storage_bucket": "work-progress-387ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763312949086:android:53d0a39cf7d3cd7e6631cf",
+        "android_client_info": {
+          "package_name": "com.song.nafis.nf.blissfulvibes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763312949086-5gdgarq8irjuslrj0hn8dals27rjsr7j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.song.nafis.nf.blissfulvibes",
+            "certificate_hash": "70e0d41027d164df30dde22609cbec8dd72adc0e"
+          }
+        },
+        {
+          "client_id": "763312949086-l26pd1msp4bgqiqcpd4f0k4csllpiab6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkDEN6dlOj_JAJZpRdLCkTP-3yDvthodw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763312949086-l26pd1msp4bgqiqcpd4f0k4csllpiab6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

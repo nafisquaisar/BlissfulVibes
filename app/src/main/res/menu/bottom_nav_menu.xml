@@ -1,0 +1,28 @@
+<!-- res/menu/bottom_nav_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/homedashboard"
+        android:title="Home"/>
+    <item
+        android:id="@+id/nav_music_search"
+        android:icon="@drawable/search_music"
+        android:title="Search"/>
+
+<!--<item-->
+<!--        android:id="@+id/nav_Shuffle"-->
+<!--        android:icon="@drawable/shuffle"-->
+<!--        android:title="Shuffle"/>-->
+
+
+
+    <item
+        android:id="@+id/nav_mymusic"
+        android:icon="@drawable/playlisticondashboard"
+        android:title="PlayList"/>
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/profile"
+        android:title="Profile"/>
+</menu>

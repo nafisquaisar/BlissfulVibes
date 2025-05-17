@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android">
-  <gradient android:startColor="@color/primary_deep_purple"
-      android:centerColor="@color/white_purple"
-      android:endColor="@color/primary_dark_purple"
-      />
+<!--  <gradient android:startColor="@color/primary_deep_purple"-->
+<!--      android:centerColor="@color/white_purple"-->
+<!--      android:endColor="@color/primary_dark_purple"-->
+<!--      />-->
+
+  <solid android:color="@color/icon_color"/>
 </shape>
